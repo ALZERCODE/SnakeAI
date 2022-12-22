@@ -28,10 +28,13 @@ class SnakeGame():
             direction = self.get_key()
             self.snake.move_snake(direction, 10)
 
-            if self.snake.head_pos[0] == self.fruit.pos[0] and self.snake.head_pos[1] == self.fruit.pos[1]:
+            self.snake.grow_body()
+
+            if self.fruit.isEatingFruit(self.snake.head_pos):
                 self.score += 10
                 self.fruit.spawn = False
-                self.snake.grow_body()
+            else:
+                self.snake.ungrow_body()
 
             if not self.fruit.spawn:
                     self.fruit.respawn()
@@ -72,7 +75,6 @@ class SnakeGame():
         quit()
 
     def get_key(self):
-        direction = self.snake.direction
 
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
@@ -88,16 +90,16 @@ class SnakeGame():
         # If two keys pressed simultaneously
         # we don't want snake to move into two directions
         # simultaneously
-        if self.change_to == 'UP' and direction != 'DOWN':
-            direction = 'UP'
-        if self.change_to == 'DOWN' and direction != 'UP':
-            direction = 'DOWN'
-        if self.change_to == 'LEFT' and direction != 'RIGHT':
-            direction = 'LEFT'
-        if self.change_to == 'RIGHT' and direction != 'LEFT':
-            direction = 'RIGHT'
-    
-        return direction
+        if self.change_to == 'UP' and self.snake.direction != 'DOWN':
+            self.snake.direction = 'UP'
+        if self.change_to == 'DOWN' and self.snake.direction != 'UP':
+            self.snake.direction = 'DOWN'
+        if self.change_to == 'LEFT' and self.snake.direction != 'RIGHT':
+            self.snake.direction = 'LEFT'
+        if self.change_to == 'RIGHT' and self.snake.direction != 'LEFT':
+            self.snake.direction = 'RIGHT'
+
+        return self.snake.direction
 
     
 if __name__ == "__main__":

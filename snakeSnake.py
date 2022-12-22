@@ -1,5 +1,3 @@
-import pygame
-
 class Snake():
 
     def __init__(self) -> None:
@@ -15,6 +13,8 @@ class Snake():
     
     def grow_body(self):
         self.body.insert(0, list(self.head_pos))
+    def ungrow_body(self):
+        self.body.pop()
 
     def move_snake(self, direction, speed):
         # Moving the snake
