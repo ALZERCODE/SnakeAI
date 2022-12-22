@@ -21,50 +21,58 @@ class SnakeGame():
 
         
     
-    def main(self):
+    def main(self, direction = None):
         # Main Function
-        while True:
-        
+
+        got_Score = 0
+
+        if not direction:
             direction = self.get_key()
-            self.snake.move_snake(direction, 10)
+        self.snake.move_snake(direction, 10)
 
-            self.snake.grow_body()
+        self.snake.grow_body()
 
-            if self.fruit.isEatingFruit(self.snake.head_pos):
-                self.score += 10
-                self.fruit.spawn = False
-            else:
-                self.snake.ungrow_body()
+        if self.fruit.isEatingFruit(self.snake.head_pos):
+            self.score += 10
+            got_Score = 1
+            self.fruit.spawn = False
+        else:
+            self.snake.ungrow_body()
 
-            if not self.fruit.spawn:
-                    self.fruit.respawn()
+        if not self.fruit.spawn:
+                self.fruit.respawn()
 
-            self.fruit.spawn = True
-                
-            self.window.reset()
+        self.fruit.spawn = True
             
-            self.snake.render(self.window)
-
-            self.window.renderBox(self.window.WHITE, self.fruit.pos)
+        self.window.reset()
         
-            # Game Over conditions
-            if self.snake.head_pos[0] < 0 or self.snake.head_pos[0] > self.window.width-10:
-                self.game_over()
-            if self.snake.head_pos[1] < 0 or self.snake.head_pos[1] > self.window.width-10:
-                self.game_over()
-            
-            # Touching the snake body
-            for block in self.snake.body[1:]:
-                if self.snake.head_pos[0] == block[0] and self.snake.head_pos[1] == block[1]:
-                    self.game_over()
-            
-            # displaying score countinuously
-            self.window.show_score(self.window.WHITE, self.window.SMALL_FONT, self.score)
-            
-            self.window.refresh()
+        self.snake.render(self.window)
+
+        self.window.renderBox(self.window.WHITE, self.fruit.pos)
+    
+        # Game Over conditions
+        if self.snake.head_pos[0] < 0 or self.snake.head_pos[0] > self.window.width-10:
+            #self.game_over()
+            return 0, True
+        if self.snake.head_pos[1] < 0 or self.snake.head_pos[1] > self.window.width-10:
+            #self.game_over()
+            return 0, True
         
-            # Frame Per Second /Refresh Rate
-            self.fps.tick(self.snake.speed)
+        # Touching the snake body
+        for block in self.snake.body[1:]:
+            if self.snake.head_pos[0] == block[0] and self.snake.head_pos[1] == block[1]:
+                #self.game_over()
+                return 0, True
+        
+        # displaying score countinuously
+        self.window.show_score(self.window.WHITE, self.window.SMALL_FONT, self.score)
+        
+        self.window.refresh()
+    
+        # Frame Per Second /Refresh Rate
+        self.fps.tick(self.snake.speed)
+
+        return got_Score, False
 
     # game over function
     def game_over(self):
@@ -104,4 +112,5 @@ class SnakeGame():
     
 if __name__ == "__main__":
     game = SnakeGame()
-    game.main()
+    while True:
+        game.main()
