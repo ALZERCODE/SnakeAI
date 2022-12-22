@@ -21,7 +21,7 @@ class SnakeGame():
 
         
     
-    def main(self, direction = None):
+    def main(self, direction = None, render=True):
         # Main Function
 
         got_Score = 0
@@ -43,36 +43,47 @@ class SnakeGame():
                 self.fruit.respawn()
 
         self.fruit.spawn = True
-            
-        self.window.reset()
         
-        self.snake.render(self.window)
-
-        self.window.renderBox(self.window.WHITE, self.fruit.pos)
     
         # Game Over conditions
         if self.snake.head_pos[0] < 0 or self.snake.head_pos[0] > self.window.width-10:
-            #self.game_over()
-            return 0, True
+            if not render:
+                return -1, True
+            self.game_over()
+
+            
         if self.snake.head_pos[1] < 0 or self.snake.head_pos[1] > self.window.width-10:
-            #self.game_over()
-            return 0, True
+            if not render:
+                return -1, True
+            self.game_over()
         
         # Touching the snake body
         for block in self.snake.body[1:]:
             if self.snake.head_pos[0] == block[0] and self.snake.head_pos[1] == block[1]:
-                #self.game_over()
-                return 0, True
+                if not render:
+                    return -1, True
+                self.game_over()
         
-        # displaying score countinuously
-        self.window.show_score(self.window.WHITE, self.window.SMALL_FONT, self.score)
-        
-        self.window.refresh()
+        if render:
+            self.render()
     
         # Frame Per Second /Refresh Rate
         self.fps.tick(self.snake.speed)
 
         return got_Score, False
+    
+    def render(self):
+        self.window.reset()
+        
+        self.snake.render(self.window)
+        self.window.renderBox(self.window.WHITE, self.fruit.pos)
+
+        # displaying score countinuously
+        self.window.show_score(self.window.WHITE, self.window.SMALL_FONT, self.score)
+        
+        self.window.refresh()
+
+
 
     # game over function
     def game_over(self):
