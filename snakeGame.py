@@ -34,7 +34,7 @@ class SnakeGame():
 
         if self.fruit.isEatingFruit(self.snake.head_pos):
             self.score += 10
-            got_Score = 1
+            got_Score += 10
             self.fruit.spawn = False
         else:
             self.snake.ungrow_body()
@@ -70,6 +70,7 @@ class SnakeGame():
         # Frame Per Second /Refresh Rate
         self.fps.tick(self.snake.speed)
 
+        got_Score += 1
         return got_Score, False
     
     def render(self):
