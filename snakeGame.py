@@ -31,7 +31,7 @@ class SnakeGame():
         self.snake.grow_body()
 
         if self.fruit.isEatingFruit(self.snake.head_pos):
-            self.score += 10
+            self.score += 100
             self.fruit.spawn = False
         else:
             self.snake.ungrow_body()
@@ -45,14 +45,14 @@ class SnakeGame():
         # Game Over conditions
         if self.snake.head_pos[0] < 0 or self.snake.head_pos[0] > self.window.width-10:
             if not render:
-                self.score -= 50
+                self.score -= 500
                 return self.score, True
             self.game_over()
 
             
         if self.snake.head_pos[1] < 0 or self.snake.head_pos[1] > self.window.width-10:
             if not render:
-                self.score -= 50
+                self.score -= 500
                 return self.score, True
             self.game_over()
         
@@ -60,7 +60,7 @@ class SnakeGame():
         for block in self.snake.body[1:]:
             if self.snake.head_pos[0] == block[0] and self.snake.head_pos[1] == block[1]:
                 if not render:
-                    self.score -= 50
+                    self.score -= 500
                     return self.score, True
                 self.game_over()
         
