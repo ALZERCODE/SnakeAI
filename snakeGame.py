@@ -24,8 +24,6 @@ class SnakeGame():
     def main(self, direction = None, render=True):
         # Main Function
 
-        got_Score = 0
-
         if not direction:
             direction = self.get_key()
         self.snake.move_snake(direction, 10)
@@ -34,7 +32,6 @@ class SnakeGame():
 
         if self.fruit.isEatingFruit(self.snake.head_pos):
             self.score += 10
-            got_Score += 10
             self.fruit.spawn = False
         else:
             self.snake.ungrow_body()
@@ -48,20 +45,23 @@ class SnakeGame():
         # Game Over conditions
         if self.snake.head_pos[0] < 0 or self.snake.head_pos[0] > self.window.width-10:
             if not render:
-                return -1, True
+                self.score -= 50
+                return self.score, True
             self.game_over()
 
             
         if self.snake.head_pos[1] < 0 or self.snake.head_pos[1] > self.window.width-10:
             if not render:
-                return -1, True
+                self.score -= 50
+                return self.score, True
             self.game_over()
         
         # Touching the snake body
         for block in self.snake.body[1:]:
             if self.snake.head_pos[0] == block[0] and self.snake.head_pos[1] == block[1]:
                 if not render:
-                    return -1, True
+                    self.score -= 50
+                    return self.score, True
                 self.game_over()
         
         if render:
@@ -70,8 +70,8 @@ class SnakeGame():
         # Frame Per Second /Refresh Rate
         self.fps.tick(self.snake.speed)
 
-        got_Score += 1
-        return got_Score, False
+        self.score += 1
+        return self.score, False
     
     def render(self):
         self.window.reset()
