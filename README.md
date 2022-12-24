@@ -5,3 +5,7 @@ Snake Source: https://www.geeksforgeeks.org/snake-game-in-python-using-pygame-mo
 
  I used an ENV called "gameAI" and installed the following packages:
  - pygame
+
+
+ Note:
+ Now there are multiple games in one ENV
