@@ -1,0 +1,9 @@
+# matches any files and directories with the name test
+test*
+
+#Exclude checkpoints and pycache
+/__pycache__
+.ipynb_checkpoints
+
+#Exclude Logs
+Training/Logs
