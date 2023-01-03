@@ -40,7 +40,7 @@ class SnakeGame():
             self.snake.ungrow_body()
 
         if not self.fruit.spawn:
-                self.fruit.respawn()
+            self.fruit.respawn()
 
         self.fruit.spawn = True
         
@@ -73,7 +73,9 @@ class SnakeGame():
         # Frame Per Second /Refresh Rate
         self.fps.tick(self.snake.speed)
 
-        reward += 1
+        #print(self.snake.get_free_space(self.window))
+
+        #reward += 1
         return reward, False
     
     def render(self, mode='human'):
@@ -127,6 +129,12 @@ class SnakeGame():
             self.snake.direction = 'RIGHT'
 
         return self.snake.direction
+
+    def relative_to_fruit(self):
+        x = self.fruit.pos[0] - self.snake.head_pos[0]
+        y = self.fruit.pos[1] - self.snake.head_pos[1]
+
+        return [x / self.window.width, y / self.window.height]
 
     
 if __name__ == "__main__":
