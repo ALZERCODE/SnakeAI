@@ -7,3 +7,6 @@ test*
 
 #Exclude Logs
 Training/Logs
+
+# Exclude my notes
+/notes/
